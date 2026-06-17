@@ -1,27 +1,15 @@
-# RepositorioTemplate
-Esse repositório é para ser utilizado pelos grupos como um template inicial.
-As seções do Template NÃO DEVEM SER OMITIDAS, sendo TODAS RELEVANTES.
-Demais diretrizes constam no Moodle.
-
-**!! Atenção: Renomeie o seu repositório para (Ano.Semestre)(Turma)_(Grupo)_(NomeDoProjeto)_(Entrega_04)*. !!** 
-
-**!! *Não coloque os nomes dos alunos no título do repositório*. !!**
-
-**!! *Exemplo de título correto: 2026.1(T02)_G1_DiárioEmocional_Entrega_04*. !!**  
- 
- (Apague esses comentários)
-
-# Nome do Projeto
+# OrganizeSeuGrupo - Entrega 04
 
 **Código da Disciplina**: FGA0208<br>
-**Número do Grupo**: XX<br>
+**Número do Grupo**: 02<br>
 **Entrega**: 04<br>
 
 ## Alunos
 |Matrícula | Aluno |
 | -- | -- |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
+| 232013944 | Camila Cavalcante |
+| 232014807 | Luísa de Souza Ferreira |
+| 231035731 | Mayara Marques Silva |
 
 ## Sobre 
 Contextualize, usando referências, links, e outros materiais como fontes.

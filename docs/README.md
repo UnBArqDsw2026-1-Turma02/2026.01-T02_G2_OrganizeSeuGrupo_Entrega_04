@@ -8,6 +8,7 @@
 |Matrícula | Aluno |
 | -- | -- |
 | 232013944 | Camila Cavalcante |
+| 231034494  |  Eduardo de Pina |
 | 232014807 | Luísa de Souza Ferreira |
 | 231035731 | Mayara Marques Silva |
 

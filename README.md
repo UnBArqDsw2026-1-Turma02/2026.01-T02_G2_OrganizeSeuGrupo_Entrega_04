@@ -18,6 +18,7 @@ A quarta entrega aborda todo o escopo requisitado, considerando o estudo e aplic
   <table style="width: 100%;">
   <tr>
     <td align="center"><a href="https://github.com/camilasilvac"><img style="border-radius: 50%;" src="https://github.com/camilasilvac.png" width="100%;" alt="Camila Silva"/><br /><sub><b>Camila Silva</b></sub></a></td>
+    <td align="center"><a href="https://github.com/eduardodpms"><img style="border-radius: 50%;" src="https://github.com/eduardodpms.png" width="100%;" alt="Eduardo de Pina"/><br /><sub><b>Eduardo de Pina</b></sub></a></td>
     <td align="center"><a href="https://github.com/luisa12ll"><img style="border-radius: 50%;" src="https://github.com/luisa12ll.png" width="100%;" alt="Luísa de Souza"/><br /><sub><b>Luísa de Souza</b></sub></a></td>
     <td align="center"><a href="https://github.com/maymarquee"><img style="border-radius: 50%;" src="https://github.com/maymarquee.png" width="100%;" alt="Mayara Marques"/><br /><sub><b>Mayara Marques</b></sub></a></td>
   </tr>

@@ -1,65 +1,16 @@
-interface Arquivo {
-    nome: string;
-    tamanho: number;
-    tipo: string;
-}
-
-interface Metadados {
-    nomeArquivo: string;
-    tamanhoBytes: number;
-    tipoMime: string;
-    dataUpload: Date;
-    extras?: Record<string, unknown>;
-}
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class Material {
-    public id: number;
-    public titulo: string;
-    public disciplina: string;
-    public tags: string[];
-    constructor(id: number, titulo: string, disciplina: string, tags: string[]) {
+    constructor(id, titulo, disciplina, tags) {
         this.id = id;
         this.titulo = titulo;
         this.disciplina = disciplina;
         this.tags = tags;
     }
 }
-
-type PrioridadeNotificacao = 'baixa' | 'normal' | 'alta';
-type CanalNotificacao = 'email' | 'app' | 'email-e-app';
-
-interface Usuario {
-    id: number;
-    nome: string;
-    email: string;
-}
-
-interface EventoNotificacao {
-    grupo: string;
-    titulo: string;
-    autor: Usuario;
-    participantes: Usuario[];
-    responsaveis?: Usuario[];
-    dados?: Record<string, unknown>;
-}
-
-interface ConteudoNotificacao {
-    assunto: string;
-    corpo: string;
-    canal: CanalNotificacao;
-}
-
-interface RegistroNotificacao {
-    destinatarios: Usuario[];
-    conteudo: ConteudoNotificacao;
-    prioridade: PrioridadeNotificacao;
-    enviadaEm: Date;
-}
-
 // 1. FROZEN SPOT - núcleo do framework (Template Method)
-abstract class ProcessadorUploadFramework {
-
-    public templateMethod(arquivo: Arquivo): Metadados {
+class ProcessadorUploadFramework {
+    templateMethod(arquivo) {
         console.log(`\n[Framework] iniciando upload de ${arquivo.nome}`);
         this.validarConteudo(arquivo);
         const metadados = this.extrairInfo(arquivo);
@@ -68,86 +19,55 @@ abstract class ProcessadorUploadFramework {
         console.log(`[Framework] upload concluído para ${arquivo.nome}`);
         return metadados;
     }
-
     // FROZEN SPOT - comportamento padrão fornecido pelo núcleo
-    protected salvarCloud(metadados: Metadados): void {
+    salvarCloud(metadados) {
         console.log(`[Framework] salvando ${metadados.nomeArquivo} na nuvem...`);
     }
-
-    // HOT SPOT obrigatório - cada tipo de material define sua validação
-    protected abstract validarConteudo(arquivo: Arquivo): void;
-
-    // HOT SPOT obrigatório - cada tipo de material extrai seus metadados
-    protected abstract extrairInfo(arquivo: Arquivo): Metadados;
-
     // HOT SPOT opcional (hook) - corpo vazio por padrão
-    protected hook_processamentoEspecifico(arquivo: Arquivo): void { }
+    hook_processamentoEspecifico(arquivo) { }
 }
-
-// 2. FROZEN SPOT - núcleo do framework (Strategy)
-interface FiltroMaterialStrategy {
-    filtrar(materiais: Material[], termoBusca: string): Material[];
-}
-
 class BuscadorDeMateriaisFramework {
-    private estrategia: FiltroMaterialStrategy;
-
-    constructor(estrategiaInicial: FiltroMaterialStrategy) {
+    constructor(estrategiaInicial) {
         this.estrategia = estrategiaInicial;
     }
-
     // FROZEN SPOT - ponto de entrada fixo do framework
-    public buscar(materiais: Material[], termoBusca: string): Material[] {
+    buscar(materiais, termoBusca) {
         console.log(`[Framework] buscando materiais com termo="${termoBusca}"`);
         return this.estrategia.filtrar(materiais, termoBusca);
     }
-
     // HOT SPOT - permite trocar o algoritmo em tempo de execução
-    public setEstrategia(estrategia: FiltroMaterialStrategy): void {
+    setEstrategia(estrategia) {
         this.estrategia = estrategia;
     }
 }
-
 // 3. FROZEN SPOT - estratégia concreta padrão, já fornecida pelo framework
-class FiltroPorDisciplinaFramework implements FiltroMaterialStrategy {
-    public filtrar(materiais: Material[], termoBusca: string): Material[] {
+class FiltroPorDisciplinaFramework {
+    filtrar(materiais, termoBusca) {
         const termo = termoBusca.toLowerCase();
         return materiais.filter((m) => m.disciplina.toLowerCase() === termo);
     }
 }
-
 // 4. FROZEN SPOT - núcleo do framework para notificações (Template Method)
-abstract class ProcessadorNotificacaoFramework {
-    public enviarNotificacao(evento: EventoNotificacao): RegistroNotificacao {
+class ProcessadorNotificacaoFramework {
+    enviarNotificacao(evento) {
         console.log(`\n[Framework] preparando notificação: ${evento.titulo}`);
         const destinatarios = this.definirDestinatarios(evento);
         this.validarDestinatarios(destinatarios);
-
         const conteudo = this.montarConteudo(evento);
         const prioridade = this.definirPrioridade(evento);
         const registro = this.despachar(destinatarios, conteudo, prioridade);
-
         console.log(`[Framework] notificação enviada para ${destinatarios.length} destinatário(s)`);
         return registro;
     }
-
     // FROZEN SPOT - validação comum controlada pelo framework
-    protected validarDestinatarios(destinatarios: Usuario[]): void {
+    validarDestinatarios(destinatarios) {
         if (destinatarios.length === 0) {
             throw new Error('A notificação precisa ter ao menos um destinatário.');
         }
     }
-
     // FROZEN SPOT - simula o envio por um canal padronizado do framework
-    protected despachar(
-        destinatarios: Usuario[],
-        conteudo: ConteudoNotificacao,
-        prioridade: PrioridadeNotificacao
-    ): RegistroNotificacao {
-        console.log(
-            `[Framework] despachando via ${conteudo.canal} com prioridade ${prioridade}: ${conteudo.assunto}`
-        );
-
+    despachar(destinatarios, conteudo, prioridade) {
+        console.log(`[Framework] despachando via ${conteudo.canal} com prioridade ${prioridade}: ${conteudo.assunto}`);
         return {
             destinatarios,
             conteudo,
@@ -155,27 +75,14 @@ abstract class ProcessadorNotificacaoFramework {
             enviadaEm: new Date(),
         };
     }
-
-    // HOT SPOT obrigatório - cada evento define quem deve receber a mensagem
-    protected abstract definirDestinatarios(evento: EventoNotificacao): Usuario[];
-
-    // HOT SPOT obrigatório - cada evento monta sua mensagem específica
-    protected abstract montarConteudo(evento: EventoNotificacao): ConteudoNotificacao;
-
-    // HOT SPOT obrigatório - cada evento decide a prioridade de envio
-    protected abstract definirPrioridade(evento: EventoNotificacao): PrioridadeNotificacao;
 }
-
-
-
 // CLIENTE
-
 // HOT SPOT estendido - especialização concreta para upload de PDF
 class UploadPdfCliente extends ProcessadorUploadFramework {
-    protected validarConteudo(arquivo: Arquivo): void {
+    validarConteudo(arquivo) {
         console.log('[Cliente] validando PDF...');
     }
-    protected extrairInfo(arquivo: Arquivo): Metadados {
+    extrairInfo(arquivo) {
         return {
             nomeArquivo: arquivo.nome,
             tamanhoBytes: arquivo.tamanho,
@@ -184,17 +91,16 @@ class UploadPdfCliente extends ProcessadorUploadFramework {
             extras: { paginas: 10 },
         };
     }
-    protected hook_processamentoEspecifico(arquivo: Arquivo): void {
+    hook_processamentoEspecifico(arquivo) {
         console.log('[Cliente] PDF aberto com leitor específico aqui');
     }
 }
-
 // HOT SPOT estendido - nova especialização criada pelo cliente,
 class UploadVideoCliente extends ProcessadorUploadFramework {
-    protected validarConteudo(arquivo: Arquivo): void {
+    validarConteudo(arquivo) {
         console.log('[Cliente] validando vídeo...');
     }
-    protected extrairInfo(arquivo: Arquivo): Metadados {
+    extrairInfo(arquivo) {
         return {
             nomeArquivo: arquivo.nome,
             tamanhoBytes: arquivo.tamanho,
@@ -203,26 +109,20 @@ class UploadVideoCliente extends ProcessadorUploadFramework {
             extras: { duracaoSegundos: 754 },
         };
     }
-
 }
-
 // HOT SPOT estendido - estratégia de busca criada pelo cliente,
-class FiltroPorTagCliente implements FiltroMaterialStrategy {
-    public filtrar(materiais: Material[], termoBusca: string): Material[] {
+class FiltroPorTagCliente {
+    filtrar(materiais, termoBusca) {
         const termo = termoBusca.toLowerCase();
-        return materiais.filter((m) =>
-            m.tags.some((tag) => tag.toLowerCase() === termo)
-        );
+        return materiais.filter((m) => m.tags.some((tag) => tag.toLowerCase() === termo));
     }
 }
-
 // HOT SPOT estendido - notificação concreta para uma nova reunião do grupo
 class NotificacaoNovaReuniaoCliente extends ProcessadorNotificacaoFramework {
-    protected definirDestinatarios(evento: EventoNotificacao): Usuario[] {
+    definirDestinatarios(evento) {
         return evento.participantes;
     }
-
-    protected montarConteudo(evento: EventoNotificacao): ConteudoNotificacao {
+    montarConteudo(evento) {
         const data = evento.dados?.data ?? 'data a definir';
         return {
             assunto: `Nova reunião em ${evento.grupo}`,
@@ -230,19 +130,16 @@ class NotificacaoNovaReuniaoCliente extends ProcessadorNotificacaoFramework {
             canal: 'email-e-app',
         };
     }
-
-    protected definirPrioridade(evento: EventoNotificacao): PrioridadeNotificacao {
+    definirPrioridade(evento) {
         return evento.dados?.urgente === true ? 'alta' : 'normal';
     }
 }
-
 // HOT SPOT estendido - notificação concreta para material compartilhado
 class NotificacaoNovoMaterialCliente extends ProcessadorNotificacaoFramework {
-    protected definirDestinatarios(evento: EventoNotificacao): Usuario[] {
+    definirDestinatarios(evento) {
         return evento.participantes.filter((usuario) => usuario.id !== evento.autor.id);
     }
-
-    protected montarConteudo(evento: EventoNotificacao): ConteudoNotificacao {
+    montarConteudo(evento) {
         const disciplina = evento.dados?.disciplina ?? 'disciplina não informada';
         return {
             assunto: `Novo material em ${evento.grupo}`,
@@ -250,19 +147,16 @@ class NotificacaoNovoMaterialCliente extends ProcessadorNotificacaoFramework {
             canal: 'app',
         };
     }
-
-    protected definirPrioridade(): PrioridadeNotificacao {
+    definirPrioridade() {
         return 'normal';
     }
 }
-
 // HOT SPOT estendido - notificação concreta para entrada de participante
 class NotificacaoNovoParticipanteCliente extends ProcessadorNotificacaoFramework {
-    protected definirDestinatarios(evento: EventoNotificacao): Usuario[] {
+    definirDestinatarios(evento) {
         return evento.responsaveis ?? [evento.autor];
     }
-
-    protected montarConteudo(evento: EventoNotificacao): ConteudoNotificacao {
+    montarConteudo(evento) {
         const participante = evento.dados?.participante ?? 'Novo participante';
         return {
             assunto: `Participante adicionado em ${evento.grupo}`,
@@ -270,57 +164,43 @@ class NotificacaoNovoParticipanteCliente extends ProcessadorNotificacaoFramework
             canal: 'email',
         };
     }
-
-    protected definirPrioridade(): PrioridadeNotificacao {
+    definirPrioridade() {
         return 'baixa';
     }
 }
-
-
 // TESTE 
 console.log('======================================');
 console.log(' DEMO 1 - Template Method (Framework)');
 console.log('======================================');
-
-const meuPdf: Arquivo = { nome: 'aula01.pdf', tamanho: 204800, tipo: 'application/pdf' };
+const meuPdf = { nome: 'aula01.pdf', tamanho: 204800, tipo: 'application/pdf' };
 const uploaderPdf = new UploadPdfCliente();
 uploaderPdf.templateMethod(meuPdf);
-
-const meuVideo: Arquivo = { nome: 'aula01.mp4', tamanho: 52428800, tipo: 'video/mp4' };
+const meuVideo = { nome: 'aula01.mp4', tamanho: 52428800, tipo: 'video/mp4' };
 const uploaderVideo = new UploadVideoCliente();
 uploaderVideo.templateMethod(meuVideo);
-
 console.log('\n======================================');
 console.log(' DEMO 2 - Strategy (Framework)');
 console.log('======================================');
-
-const materiais: Material[] = [
+const materiais = [
     new Material(1, 'Slides de Arquitetura - Reutilização', 'Arquitetura', ['slides', 'framework']),
     new Material(2, 'Lista de Exercícios de Cálculo III', 'Cálculo', ['lista', 'individual']),
     new Material(3, 'Resumo de Padrões de Projeto', 'Arquitetura', ['resumo', 'gof']),
     new Material(4, 'Vídeo-aula de Banco de Dados', 'Banco', ['video', 'aula']),
 ];
-
-const formatar = (lista: Material[]): string =>
-    lista.map((m) => `#${m.id} ${m.titulo}`).join(' | ') || '(nenhum)';
-
+const formatar = (lista) => lista.map((m) => `#${m.id} ${m.titulo}`).join(' | ') || '(nenhum)';
 const buscador = new BuscadorDeMateriaisFramework(new FiltroPorDisciplinaFramework());
 console.log('=== Estratégia do framework: FiltroPorDisciplina | termo="Arquitetura" ===');
 console.log(formatar(buscador.buscar(materiais, 'Arquitetura')));
-
 buscador.setEstrategia(new FiltroPorTagCliente());
 console.log('\n=== Estratégia do cliente: FiltroPorTag | termo="framework" ===');
 console.log(formatar(buscador.buscar(materiais, 'framework')));
-
 console.log('\n======================================');
 console.log(' DEMO 3 - Notificações (Template Method)');
 console.log('======================================');
-
-const camila: Usuario = { id: 1, nome: 'Camila Silva', email: 'camila@organizeseugrupo.com' };
-const luisa: Usuario = { id: 2, nome: 'Luísa de Souza', email: 'luisa@organizeseugrupo.com' };
-const joao: Usuario = { id: 3, nome: 'João Pereira', email: 'joao@organizeseugrupo.com' };
-const participantes: Usuario[] = [camila, luisa, joao];
-
+const camila = { id: 1, nome: 'Camila Silva', email: 'camila@organizeseugrupo.com' };
+const luisa = { id: 2, nome: 'Luísa de Souza', email: 'luisa@organizeseugrupo.com' };
+const joao = { id: 3, nome: 'João Pereira', email: 'joao@organizeseugrupo.com' };
+const participantes = [camila, luisa, joao];
 const notificacaoReuniao = new NotificacaoNovaReuniaoCliente();
 notificacaoReuniao.enviarNotificacao({
     grupo: 'Grupo de Arquitetura',
@@ -329,7 +209,6 @@ notificacaoReuniao.enviarNotificacao({
     participantes,
     dados: { data: '24/06/2026 19:00', urgente: true },
 });
-
 const notificacaoMaterial = new NotificacaoNovoMaterialCliente();
 notificacaoMaterial.enviarNotificacao({
     grupo: 'Grupo de Arquitetura',
@@ -338,7 +217,6 @@ notificacaoMaterial.enviarNotificacao({
     participantes,
     dados: { disciplina: 'Arquitetura e Desenho de Software' },
 });
-
 const notificacaoParticipante = new NotificacaoNovoParticipanteCliente();
 notificacaoParticipante.enviarNotificacao({
     grupo: 'Grupo de Arquitetura',
@@ -348,5 +226,3 @@ notificacaoParticipante.enviarNotificacao({
     responsaveis: [camila],
     dados: { participante: 'João Pereira' },
 });
-
-export {};

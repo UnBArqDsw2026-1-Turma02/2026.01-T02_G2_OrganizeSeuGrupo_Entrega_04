@@ -4,8 +4,8 @@
   "description": "Implementação do Framework de Reutilização de Software para a Entrega 04 (Arquitetura & Reutilização).",
   "private": true,
   "scripts": {
-    "framework": "ts-node framework.ts",
-    "build": "tsc"
+    "framework": "node -r ./node_modules/ts-node/register framework.ts",
+    "build": "node ./node_modules/typescript/bin/tsc"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",

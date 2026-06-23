@@ -1,5 +1,5 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type JSX } from "react";
 import {
   ActivityIndicator,
   Modal,

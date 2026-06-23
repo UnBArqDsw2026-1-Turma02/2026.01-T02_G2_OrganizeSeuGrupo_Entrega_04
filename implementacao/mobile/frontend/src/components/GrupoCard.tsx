@@ -1,4 +1,5 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { type JSX } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Grupo } from "../types/Grupo";
 import { cores, espacos } from "../theme/tokens";

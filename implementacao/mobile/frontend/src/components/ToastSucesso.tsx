@@ -1,5 +1,5 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type JSX } from "react";
 import { Animated, StyleSheet, Text } from "react-native";
 import { cores, espacos } from "../theme/tokens";
 

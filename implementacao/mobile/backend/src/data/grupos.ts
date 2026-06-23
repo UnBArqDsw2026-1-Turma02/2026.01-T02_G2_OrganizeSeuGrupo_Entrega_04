@@ -1,0 +1,61 @@
+import { Grupo } from "../models/Grupo";
+
+// Dados em memória (mock) baseados nos cards da tela "Meus Grupos" do Figma.
+// Substituir por acesso ao banco quando a persistência for implementada.
+export const grupos: Grupo[] = [
+  {
+    id: "1",
+    nome: "Cálculo I",
+    disciplina: "Matemática",
+    descricao: "Grupo de estudos de cálculo diferencial e integral",
+    tags: ["Urgente", "Prova"],
+    membros: 5,
+    proximaReuniao: "Hoje, 14:00",
+    cor: "#0fa3b1",
+    favorito: true,
+  },
+  {
+    id: "2",
+    nome: "Estrutura de Dados",
+    disciplina: "Computação",
+    descricao: "Estudos de árvores, grafos e algoritmos",
+    tags: ["Resumo"],
+    membros: 8,
+    proximaReuniao: "Amanhã, 15:30",
+    cor: "#1d2d44",
+    favorito: false,
+  },
+  {
+    id: "3",
+    nome: "Física Quântica",
+    disciplina: "Física",
+    descricao: "Mecânica quântica e física moderna",
+    tags: ["Prova"],
+    membros: 15,
+    proximaReuniao: "10 Abr, 16:00",
+    cor: "#ccba7b",
+    favorito: false,
+  },
+  {
+    id: "4",
+    nome: "Inglês Avançado",
+    disciplina: "Idiomas",
+    descricao: "Conversação e gramática avançada",
+    tags: ["Urgente"],
+    membros: 20,
+    proximaReuniao: "Sábado, 10:00",
+    cor: "#84a5d0",
+    favorito: true,
+  },
+  {
+    id: "5",
+    nome: "Design Thinking",
+    disciplina: "Design",
+    descricao: "Metodologias de design e inovação",
+    tags: ["Resumo"],
+    membros: 6,
+    proximaReuniao: "Segunda, 19:00",
+    cor: "#1d2d44",
+    favorito: false,
+  },
+];

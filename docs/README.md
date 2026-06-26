@@ -74,8 +74,20 @@ npm start           # abre o Expo
 # A URL base do backend fica em src/config.ts (emulador Android: 10.0.2.2; device físico: IP da máquina)
 ```
 
+**Vídeo de Execução**
+<center>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9EvfG-UFrAQ?si=vFVi8_WJrZCMjUJ8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+</center>
+
+<p align="center"><b>Vídeo 1 -</b> Apresentação app web e mobile.</p>
+
+<p align="center"><b>Fonte:</b> Mayara Marques</p>
+
 ## Histórico de Versões
 
 | Versão | Data       | Descrição                                                      | Autor                   | Revisor                 |
 | :----: | ---------- | -------------------------------------------------------------- | ----------------------- | ----------------------- |
 | `1.0`  | 22/06/2026 | Criação do documento| [Mayara Marques](https://github.com/maymarquee) | [Luísa de Souza](https://github.com/luisa12ll) |
+| `1.1`  | 26/06/2026 | Adição de vídeo de execução | [Mayara Marques](https://github.com/maymarquee) | [Camila Silva](https://github.com/CamilaSilvaC) |
